@@ -45,7 +45,7 @@ router
 		const info = req.body;
 		db.insert(id, info)
 			.then(post => {
-				info.title ?? info.contents && post
+				info.title && info.contents && post
 					? res.status(200).json({success: true, post})
 					: res.status(404).json({success: false, message: "Post not found"})
 			})
