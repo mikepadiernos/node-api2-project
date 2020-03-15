@@ -53,10 +53,22 @@ router
 	})
 	.delete((req, res) => {
 		const {id} = req.params;
-		db.remove(id)
+		// db.remove(id)
+		// 	.then(post => {
+		// 		post
+		// 			? res.status(200).json({success: true, post})
+		// 			: res.status(404).json({success: false, message: "Post not found"})
+		// 	})
+		// 	.catch(error => {res.status(500).json({success: false, message: "Posts not removed", error})})
+		db.findById(id)
 			.then(post => {
 				post
-					? res.status(204).end()
+					?  db.remove(id)
+						.then(del => {
+							if (del) {res.status(200).json({success: true, post})}
+						})
+						.catch(error => {res.status(500).json({success: false, message: 'Posts not removed', error});
+						})
 					: res.status(404).json({success: false, message: "Post not found"})
 			})
 			.catch(error => {res.status(500).json({success: false, message: "Posts not removed", error})})
