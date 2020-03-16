@@ -132,8 +132,8 @@ router
 						// console.log("Post: ", post);
 						// let commentId = {comment: {id: req.params.id}};
 						console.log("Post ID: ", postId);
-						console.log("Comment Post ID: ", comment.post_id);
-						postId !== comment
+						console.log("Comment Post ID: ", comment[0].post_id);
+						Number(postId) !== comment[0].post_id
 							? res.status(404).json({success: false, message: "Comment not found"})
 							: res.status(200).json(comment)
 				})
@@ -142,6 +142,14 @@ router
 				})
 			// });
 	})
-	.delete((req, res) => {});
+	.delete((req, res) => {
+		db.removeComment(req.params.id)
+			.then(comment => {
+				res.status(200).json({success: true, message: "Comment deleted", comment})
+			})
+			.catch(error => {
+				res.status(500).json({success: false, message: "Comment not deleted", error})
+			})
+	});
 
 module.exports = router;
