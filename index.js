@@ -10,5 +10,5 @@ server
 		if (error) {
 			return console.log("What's the error? ", error);
 		}
-		console.log("Server is listening on port: ", port);
+		console.log("Server is listening on port:", port);
 	});

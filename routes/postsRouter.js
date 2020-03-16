@@ -19,13 +19,13 @@ router
 			})
 	})
 	.post((req, res) => {
-		console.log("Posts: Created? ", req.body);
+		// console.log("Posts: Created? ", req.body);
 		const info = req.body;
 		db.insert(info)
 			.then(post => {
-				info.title && info.contents
-					? res.status(201).json({success: true, post})
-					: res.status(400).json({success: false, message: "Please provide title and content"})
+				!info.title && !info.contents
+					? res.status(400).json({success: false, message: "Please provide title and content"})
+					: res.status(201).json({success: true, post})
 			})
 			.catch(error => {res.status(500).json({success: false, message: "Post not created", error})})
 	});
@@ -45,31 +45,24 @@ router
 		const info = req.body;
 		db.insert(id, info)
 			.then(post => {
-				info.title && info.contents && post
-					? res.status(200).json({success: true, post})
-					: res.status(404).json({success: false, message: "Post not found"})
+				!info.title && !info.contents && post
+					? res.status(404).json({success: false, message: "Post not found"})
+					: res.status(200).json({success: true, post})
 			})
 			.catch(error => {res.status(500).json({success: false, message: "Post not updated", error})})
 	})
 	.delete((req, res) => {
 		const {id} = req.params;
-		// db.remove(id)
-		// 	.then(post => {
-		// 		post
-		// 			? res.status(200).json({success: true, post})
-		// 			: res.status(404).json({success: false, message: "Post not found"})
-		// 	})
-		// 	.catch(error => {res.status(500).json({success: false, message: "Posts not removed", error})})
 		db.findById(id)
 			.then(post => {
-				post
-					?  db.remove(id)
+				!post
+					? res.status(404).json({success: false, message: "Post not found"})
+					: db.remove(id)
 						.then(del => {
 							if (del) {res.status(200).json({success: true, post})}
 						})
 						.catch(error => {res.status(500).json({success: false, message: 'Posts not removed', error});
 						})
-					: res.status(404).json({success: false, message: "Post not found"})
 			})
 			.catch(error => {res.status(500).json({success: false, message: "Posts not removed", error})})
 	});
@@ -77,7 +70,78 @@ router
 // HANDLERS FOR ROUTE "/api/posts/:id/comments"
 router
 	.route('/:id/comments')
-	.get((req, res) => {})
+	.get((req, res) => {
+		const {id} = req.params;
+		// console.log("Params: ", req.params);
+		// console.log("Request: ", req);
+		// console.log("ID: ", id);
+		db.findPostComments(id)
+			.then(post => {
+				console.log("Post: ", post);
+				!post
+					? res.status(404).json({success: false, message: "Post not found"})
+					: res.status(200).json(post)
+			})
+			.catch(error => {res.status(500).json({success: false, message: "Posts not removed", error})})
+
+	})
+	.post((req, res) => {
+		const id = req.params.id;
+		const info = req.body;
+		let newComment = {
+			text: info.text,
+			post_id: id
+		};
+		!info.text
+			? res.status(400).json({ success: false, Message: 'Please provide text' })
+			: db.findById(id)
+					.then(post => {
+						// console.log("Post: ", post);
+						!post
+							? res.status(404).json({success: false, message: "Post not found"})
+							:	db.insertComment(newComment)
+									.then(({ id }) => {
+										console.log("Comment: ", newComment);
+										db.findCommentById(id)
+											.then(comment => {
+												res.status(201).json(comment)
+											})
+									})
+									.catch(error => {
+										res.status(500).json({success: false, message: 'Comment not created',	error	})
+									})
+						})
+			});
+
+router
+	.route('/:pid/comments/:id')
+	.get((req, res) => {
+		const postId = req.params.pid;
+		const id = req.params.id;
+		const info = req.body;
+		// console.log("Info: ", info);
+
+		// db.findById(id)
+		// 	.then(post => {
+				// console.log("Post: ", post);
+				// let postId = {post: {id: req.params.id}};
+				// console.log("Post ID: ", postId);
+				db.findCommentById(id)
+					.then(comment => {
+						console.log("Comment: ", comment);
+						// console.log("Post: ", post);
+						// let commentId = {comment: {id: req.params.id}};
+						console.log("Post ID: ", postId);
+						console.log("Comment Post ID: ", comment.post_id);
+						postId !== comment
+							? res.status(404).json({success: false, message: "Comment not found"})
+							: res.status(200).json(comment)
+				})
+				.catch(error => {
+					res.status(500).json({success: false, message: 'Comment not found',	error	})
+				})
+			// });
+	})
 	.delete((req, res) => {});
 
 module.exports = router;
