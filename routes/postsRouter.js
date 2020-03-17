@@ -118,29 +118,19 @@ router
 	.get((req, res) => {
 		const postId = req.params.pid;
 		const id = req.params.id;
-		const info = req.body;
-		// console.log("Info: ", info);
-
-		// db.findById(id)
-		// 	.then(post => {
-				// console.log("Post: ", post);
-				// let postId = {post: {id: req.params.id}};
+		// const info = req.body;
+		db.findCommentById(id)
+			.then(comment => {
+				// console.log("Comment: ", comment);
 				// console.log("Post ID: ", postId);
-				db.findCommentById(id)
-					.then(comment => {
-						console.log("Comment: ", comment);
-						// console.log("Post: ", post);
-						// let commentId = {comment: {id: req.params.id}};
-						console.log("Post ID: ", postId);
-						console.log("Comment Post ID: ", comment[0].post_id);
-						Number(postId) !== comment[0].post_id
-							? res.status(404).json({success: false, message: "Comment not found"})
-							: res.status(200).json(comment)
-				})
-				.catch(error => {
-					res.status(500).json({success: false, message: 'Comment not found',	error	})
-				})
-			// });
+				// console.log("Comment Post ID: ", comment[0].post_id);
+				Number(postId) !== comment[0].post_id
+					? res.status(404).json({success: false, message: "Comment not found"})
+					: res.status(200).json(comment)
+		})
+		.catch(error => {
+			res.status(500).json({success: false, message: 'Comment not found',	error	})
+		})
 	})
 	.delete((req, res) => {
 		db.removeComment(req.params.id)
