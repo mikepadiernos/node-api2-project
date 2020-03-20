@@ -1,7 +1,7 @@
-
 // IMPORT MODULES
 const express         = require('express');
 const cors            = require('cors');
+const favicon         = require('serve-favicon-safe');
 
 // IMPORT DATABASE
 const db              = require('./data/db');

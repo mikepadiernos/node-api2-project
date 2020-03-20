@@ -25,7 +25,7 @@ router
 			.then(post => {
 				!info.title && !info.contents
 					? res.status(400).json({success: false, message: "Please provide title and content"})
-					: res.status(201).json({success: true, post})
+					: res.status(201).json({success: true, info})
 			})
 			.catch(error => {res.status(500).json({success: false, message: "Post not created", error})})
 	});
