@@ -1,9 +1,8 @@
 dependencies:
   cors: 2.8.5
   express: 4.17.1
+  express-favicon: 2.0.1
   knex: 0.20.11_sqlite3@4.1.1
-  serve-favicon: 2.5.0
-  serve-favicon-safe: 0.1.0_serve-favicon@2.5.0
   sqlite3: 4.1.1
 devDependencies:
   nodemon: 2.0.2
@@ -645,6 +644,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-l+gBqgUt8CRU3kawK/YhZCzchQI=
+  /express-favicon/2.0.1:
+    dev: false
+    engines:
+      node: '>=4'
+    resolution:
+      integrity: sha512-KZZF9lIUKU9lkyZM/7AVql7qeXA6EVkHCU5rGU4NvgbWNcYFn6zvCw3cwS5IY/vvP+MzVNVvBABnWfaVZoy7bQ==
   /express/4.17.1:
     dependencies:
       accepts: 1.3.7
@@ -2177,10 +2182,6 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==
-  /safe-buffer/5.1.1:
-    dev: false
-    resolution:
-      integrity: sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==
   /safe-buffer/5.1.2:
     dev: false
     resolution:
@@ -2234,26 +2235,6 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-BsVKsiGcQMFwT8UxypobUKyv7irCNRHk1T0G680vk88yf6LBByGcZJOTJCrTP2xVN6yI+XjPJcNuE3V4fT9sAg==
-  /serve-favicon-safe/0.1.0_serve-favicon@2.5.0:
-    dependencies:
-      serve-favicon: 2.5.0
-    dev: false
-    peerDependencies:
-      serve-favicon: ^2.5.0
-    resolution:
-      integrity: sha512-YnCMVlxfsBsG1Ns2Re3k1n0Zhe6O/nezkx9g/L3gpaiJfAiIScmJDphwEHBMAfETGSbIHihjtpN8zJh3UCP1Sw==
-  /serve-favicon/2.5.0:
-    dependencies:
-      etag: 1.8.1
-      fresh: 0.5.2
-      ms: 2.1.1
-      parseurl: 1.3.3
-      safe-buffer: 5.1.1
-    dev: false
-    engines:
-      node: '>= 0.8.0'
-    resolution:
-      integrity: sha1-k10kDN/g9YBTB/3+ln2IlCosvPA=
   /serve-static/1.14.1:
     dependencies:
       encodeurl: 1.0.2
@@ -2766,8 +2747,7 @@ packages:
 specifiers:
   cors: ^2.8.5
   express: ^4.17.1
+  express-favicon: ^2.0.1
   knex: ^0.20.11
   nodemon: ^2.0.2
-  serve-favicon: ^2.5.0
-  serve-favicon-safe: ^0.1.0
   sqlite3: ^4.1.1

@@ -10,9 +10,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
     "knex": "^0.20.11",
-    "serve-favicon": "^2.5.0",
-    "serve-favicon-safe": "^0.1.0",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
