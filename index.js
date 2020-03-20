@@ -1,5 +1,5 @@
 // DEFAULT PORT
-const port            = process.env.port || 4444;
+const port            = process.env.PORT || 4445;
 
 // IMPORT SERVER
 const server          = require('./server');
