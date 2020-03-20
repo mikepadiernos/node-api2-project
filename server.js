@@ -1,7 +1,7 @@
 // IMPORT MODULES
 const express         = require('express');
 const cors            = require('cors');
-const favicon         = require('express-favicon');
+// const favicon         = require('express-favicon');
 
 // IMPORT DATABASE
 const db              = require('./data/db');
@@ -14,7 +14,7 @@ const server          = express();
 
 server.use(express.json());
 server.use(cors());
-server.use(favicon(__dirname + '/public/favicon.png'));
+// server.use(favicon(__dirname + '/public/favicon.png'));
 
 
 // HANDLER, GET - "/"
